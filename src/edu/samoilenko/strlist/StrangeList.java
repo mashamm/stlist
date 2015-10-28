@@ -2,11 +2,12 @@
 package edu.samoilenko.strlist;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class StrangeList<T extends Number> {
+public class StrangeList<T extends Number> implements Iterable<T>{
 	private List<T> list;
 	private Adder<T> adder;
 	private final int LIST_SIZE = 5;
@@ -62,6 +63,15 @@ public class StrangeList<T extends Number> {
 				.mapToObj(list::get)
 				.collect(Collectors.toList())
 				.toString() + " size=" + list.size();
+	}
+
+	public int size(){
+		return list.size();
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return list.iterator();
 	}
 
 }
