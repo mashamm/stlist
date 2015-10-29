@@ -7,13 +7,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class StrangeList<T extends Number> implements Iterable<T>{
+public class StrangeList<T extends Number> implements Iterable<T> {
 	private List<T> list;
-	private Adder<T> adder;
+	Adder<T> adder;
+
 	private final int LIST_SIZE = 5;
 
 	public StrangeList() {
 		list = new ArrayList<>();
+		adder = new Adder<>();
+
 	}
 
 	public void add(T el) {
@@ -26,23 +29,14 @@ public class StrangeList<T extends Number> implements Iterable<T>{
 		return list.get(index);
 	}
 
+	
 	@SuppressWarnings("unchecked")
 	public boolean delete(int index) {
 		if (list.size() > index) {
 			T el = this.peek(index);
 			list.remove(index);
-			if (el instanceof Double) {
-				adder = (Adder<T>) new DoubleAdder();
-			}
-			if (el instanceof Integer) {
-				adder = (Adder<T>) new IntegerAdder();
-			}
-			if (el instanceof Float) {
-				adder = (Adder<T>) new FloatAdder();
-			}
-			
 			for (int i = 0; i < list.size(); i++) {
-				list.set(i, adder.add(list.get(i), el));
+				list.set(i, (T) adder.add(list.get(i), el));
 			}
 
 			return true;
@@ -65,7 +59,7 @@ public class StrangeList<T extends Number> implements Iterable<T>{
 				.toString() + " size=" + list.size();
 	}
 
-	public int size(){
+	public int size() {
 		return list.size();
 	}
 
